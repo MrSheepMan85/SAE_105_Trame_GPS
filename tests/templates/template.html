@@ -1,0 +1,73 @@
+ <!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{titre}</title>
+</head>
+  <body>  
+<h1> Les trames GPS </h1>
+    <p>Nous vous présentons comment extraire des informations d'une trame GPS</p>
+    <p>Une trame GPS ce divise en plusieurs informations très utilises pour la marine.</p>
+    <p>Dans cette trame, on y retrouve l'équipement qui a généré, la trame, un code d'identification de la trame 
+    et les donnÃ©es qui consernent la trame.</p>
+    <p>Nous vous proposons donc un lecture plus facile d'une trame GPS de type de la norme NMEA 0183</p>
+    <p> </p>
+    <p> </p>
+    <p>Le tableau ci-dessous va reprendre toute les trames du trajet</p>
+    <table>
+        <tr>
+            <th> Trame du trjet </th>
+            
+        </tr>
+        <tr>
+            <td>{trame1}</td>
+        </tr>
+    </table>
+    <p>
+        On pourra retrouver dans le tableau la trame de départ puis la trame d'arrivé
+    </p>
+    <table>
+        <tr>
+            <th>trame</th>
+            <th>coordonné</th>
+        </tr>
+        <td>{trame}</td>
+        <td>{}</td>
+    </table>
+    <table>
+<tr>
+    <th>Trame GPS</th>
+    <th> positions de la trame</th>
+    <th> positions de départ</th>
+    <th> position d’arrivée</th>
+    <th>positions les plus au nord</th>
+    <th>position les plus au sud</th>
+    <th> position les plus à l'est </th>
+    <th> position les plus à l'ouest </th>
+    <th> la position la plus élevée</th>
+    <th> la distance parcourue</th>
+    <th> la vitesses moyenne </th>
+    <th> la vitesses minimal </th>
+    <th> la vitesses maximal</th>
+</tr>
+
+<tr>
+<td>{{trame}}</td>
+<td>{position}</td>
+<td>{départ}</td>
+<td>{arrivé}</td>
+<td>{nord}</td>
+<td>{sud}</td>
+<td>{est}</td>
+<td>{ouest}</td>
+<td>{alt}</td>
+<td>{distance}</td>
+<td>{vmoy}</td>
+<td>{vmin}</td>
+<td>{vmax}</td>
+</tr>
+</table>
+
+   </body> 
+</html>
