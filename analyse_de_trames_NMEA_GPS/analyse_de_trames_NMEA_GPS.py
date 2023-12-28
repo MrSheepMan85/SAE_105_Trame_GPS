@@ -7,17 +7,23 @@ Created on Fri Oct  6 09:32:31 2023
 """
 
 
+
+
 def sep_trame(trame_gps):
     return trame_gps.split(",")
 
 def horaire (time_section) :
-    temps=time_section
-    heure=temps[0 : 2]
-    minutes=temps[2 : 4]
-    secondes=temps[4 : 6]
-    milli=temps[7 : 10]
-    return(heure, minutes, secondes, milli)
+    heure=time_section[0 : 2]
+    minutes=time_section[2 : 4]
+    secondes=time_section[4 : 6]
+    milli=time_section[7 : 10]
+    return (heure, minutes, secondes, milli)
 
+def date(date_section):
+    jour=date_section[0 : 2]
+    mois=date_section[2 : 4]
+    annee = date_section[4 : 6]
+    return (jour, mois, annee)
 
 
 
@@ -29,6 +35,19 @@ def parse_coo(section):
 
 def info_trame(trame_GPS):
     section = sep_trame(trame_GPS)
+    TYPE = section[0][3:]
+    if TYPE == "GGA":
+        return info_trame_gga(section)
+    elif TYPE == "VTG":
+        return info_trame_vtg(section)
+    elif TYPE == "RMC":
+        return info_trame_rmc(section)
+    else: 
+        return None
+
+
+
+def info_trame_gga(section):
     infos = {}
     infos["type"] = section[0]
     infos["horaire"] = horaire(section[1])
@@ -37,7 +56,20 @@ def info_trame(trame_GPS):
     infos["nbsat"] = section[7]
     infos["alt"] = section[9]
     return infos
-    
+
+def info_trame_vtg(trame_GPS):
+    infos = {}
+    infos["type"] = section[0]
+    infos["vit"] = section[7]
+    return infos
+
+def info_trame_rmc(trame_GPS):
+    infos = {}
+    infos["type"] = section[0]
+    infos["date"] = date(section[9])
+    return infos
+
+def 
 #file=open()
 
 
