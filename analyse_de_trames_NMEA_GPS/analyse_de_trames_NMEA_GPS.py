@@ -83,6 +83,7 @@ if __name__ == "__main__":
     print("Coordonnées Est :", info["est"][0],"degrés", info["est"][1],"minutes" )
     print("satellites en poursuite :" , info["nbsat"])
     print("Altitude :", info["alt"])
+    print("Vitesse :", info["vit"])
 
 
 
