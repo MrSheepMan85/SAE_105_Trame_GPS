@@ -100,9 +100,10 @@ def extract(path:str):
 def extract_coo(pos):
     coordinates = []
     for p in pos:
-        first_gga = p['gga'][0] if 'gga' in p and len(p['gga']) > 0 else None
-        last_gga = p['gga'][-1] if 'gga' in p and len(p['gga']) > 0 else None
-        
+        if 'gga' in p:
+            for trame in p['gga']:
+                section_2 = trame.get('nord')  
+                section_4 = trame.get('est')
         coordinates.append({'first': first_gga, 'last': last_gga})
     
     return coordinates
