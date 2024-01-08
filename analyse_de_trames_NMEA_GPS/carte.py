@@ -3,6 +3,34 @@ from analyse_de_trames_NMEA_GPS import info_trame
 from analyse_de_trames_NMEA_GPS import extract_coordinates, parse_coo
 
 def get_coordinates_sections_2_4(pos):
+    """
+    Extrait et transforme les coordonnées des sections 2 et 4 des trames GPS.
+
+    Auteur : Etienne
+    Date de création : 30/12/23
+    Dernière modification : 30/12/23
+
+    Paramètres :
+    - pos (list) : Liste de dictionnaires contenant les informations extraites des trames GPS.
+    
+    Bornes d'utilisation :
+    - La liste pos doit contenir des dictionnaires conformes à la norme NMEA avec les données des trames GPS.
+
+    Retour :
+    - Une liste de dictionnaires, chaque dictionnaire contenant les coordonnées transformées des sections 2 et 4.
+      Chaque dictionnaire contient deux clés : 'section_2' et 'section_4', associées aux coordonnées transformées.
+      Si aucune information de coordonnées n'est trouvée pour une section, le dictionnaire correspondant est omis.
+
+    Exemple d'utilisation :
+    >>> get_coordinates_sections_2_4([
+    ...     {'GGA': {'nord': '4836.5375', 'est': '00740.9373'}},
+    ...     {'GGA': {'nord': '4837.1234', 'est': '00741.5678'}},
+    ... ])
+    # [
+    #     {'section_2': [48.610625, 7.682288333333333], 'section_4': [48.61872333333333, 7.692796666666667]},
+    #     {'section_2': [48.61872333333333, 7.692796666666667], 'section_4': [48.62122333333333, 7.692796666666667]}
+    # ]
+    """
     coordinates_sections_2_4 = []
     for p in pos:
         if 'gga' in p:
@@ -22,8 +50,6 @@ def get_coordinates_sections_2_4(pos):
 
 
 
-
-path_to_data = 'votre_fichier_de_donnees.txt'
 pos = extract(path_to_data)
 
 # Récupération des coordonnées de la liste 'gga'
