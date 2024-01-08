@@ -152,7 +152,6 @@ def info_trame(trame_GPS):
         return None
 
 
-$
 
 def info_trame_vtg(trame_GPS):
     """
@@ -366,13 +365,6 @@ def extract_high_alt(pos):
 
 
 
-if __name__ == "__main__":
-    path_to_data = 'votre_fichier_de_donnees.txt'
-    
-    alt = extract_high_alt(pos)
-    coordinates_gga = extremes_use_coo(extract_coo)
-    generate_map(coordinates_gga)
-    vitmax = vit_max(max)
 
 
 

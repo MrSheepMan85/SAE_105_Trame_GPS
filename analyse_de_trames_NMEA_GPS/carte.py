@@ -18,14 +18,14 @@ def generate_map_with_trajectory(data):
     La carte est sauvegardée dans un fichier HTML nommé 'carte_trajet.html'.
     """
     # Création de la carte centrée sur une position de départ (par exemple, première coordonnée)
-    m = folium.Map(location=[data[0]['nord'], data[0]['est']], zoom_start=12)
+m = folium.Map(location=[data[0]['nord'], data[0]['est']], zoom_start=12)
 
     # Traçage du trajet en utilisant les coordonnées extraites des trames GGA
-    for d in data:
+for d in data:
         folium.CircleMarker(location=[d['nord'], d['est']], radius=3, color='blue').add_to(m)
 
     # Sauvegarde de la carte dans un fichier HTML
-    m.save('carte_trajet.html')
+m.save('carte_trajet.html')
 
 # Extraction des données des trames GPS depuis un fichier
 trames_gps = extract('SAE_105_Trame_GPS/data/trame.txt')
