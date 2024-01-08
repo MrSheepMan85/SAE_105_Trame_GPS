@@ -1,72 +1,34 @@
 import folium
-from analyse_de_trames_NMEA_GPS import info_trame
-from analyse_de_trames_NMEA_GPS import extract_coordinates, parse_coo
+import analyse_de_trames_NMEA_GPS 
+import calcule
 
-def get_coordinates_sections_2_4(pos):
-    """
-    Extrait et transforme les coordonnées des sections 2 et 4 des trames GPS.
-
-    Auteur : Etienne
-    Date de création : 30/12/23
-    Dernière modification : 30/12/23
+def generate_map_with_trajectory(data):
+  """
+    Génère une carte représentant un trajet à partir des données de coordonnées extraites des trames GPS.
 
     Paramètres :
-    - pos (list) : Liste de dictionnaires contenant les informations extraites des trames GPS.
+    - data (list) : Une liste de dictionnaires contenant les données de coordonnées extraites des trames GPS.
+                    Chaque dictionnaire devrait contenir les clés 'nord' et 'est' pour chaque trame GGA.
+
+    Usage :
+    generate_map_with_trajectory(data)
     
-    Bornes d'utilisation :
-    - La liste pos doit contenir des dictionnaires conformes à la norme NMEA avec les données des trames GPS.
-
-    Retour :
-    - Une liste de dictionnaires, chaque dictionnaire contenant les coordonnées transformées des sections 2 et 4.
-      Chaque dictionnaire contient deux clés : 'section_2' et 'section_4', associées aux coordonnées transformées.
-      Si aucune information de coordonnées n'est trouvée pour une section, le dictionnaire correspondant est omis.
-
-    Exemple d'utilisation :
-    >>> get_coordinates_sections_2_4([
-    ...     {'GGA': {'nord': '4836.5375', 'est': '00740.9373'}},
-    ...     {'GGA': {'nord': '4837.1234', 'est': '00741.5678'}},
-    ... ])
-    # [
-    #     {'section_2': [48.610625, 7.682288333333333], 'section_4': [48.61872333333333, 7.692796666666667]},
-    #     {'section_2': [48.61872333333333, 7.692796666666667], 'section_4': [48.62122333333333, 7.692796666666667]}
-    # ]
+    La fonction crée une carte centrée sur la première coordonnée de la liste fournie, puis trace le trajet
+    en utilisant des marqueurs circulaires à chaque point de coordonnées extraites des trames GGA.
+    La carte est sauvegardée dans un fichier HTML nommé 'carte_trajet.html'.
     """
-    coordinates_sections_2_4 = []
-    for p in pos:
-        if 'gga' in p:
-            for trame in p['gga']:
-                section_2 = trame.get('nord')  # Changer 'nord' ou 'est' selon la section souhaitée
-                section_4 = trame.get('est')   # Changer 'nord' ou 'est' selon la section souhaitée
-                
-                if section_2 is not None and section_4 is not None:
-                    # Appliquer la transformation sur les données
-                    coord_section_2 = parse_coo(section_2)
-                    coord_section_4 = parse_coo(section_4)
-                    
-                    # Ajouter les coordonnées transformées à la liste
-                    coordinates_sections_2_4.append({'section_2': coord_section_2, 'section_4': coord_section_4})
-    
-    return coordinates_sections_2_4
+    # Création de la carte centrée sur une position de départ (par exemple, première coordonnée)
+    m = folium.Map(location=[data[0]['nord'], data[0]['est']], zoom_start=12)
 
+    # Traçage du trajet en utilisant les coordonnées extraites des trames GGA
+    for d in data:
+        folium.CircleMarker(location=[d['nord'], d['est']], radius=3, color='blue').add_to(m)
 
+    # Sauvegarde de la carte dans un fichier HTML
+    m.save('carte_trajet.html')
 
-pos = extract(path_to_data)
+# Extraction des données des trames GPS depuis un fichier
+trames_gps = extract('SAE_105_Trame_GPS/data/trame.txt')
 
-# Récupération des coordonnées de la liste 'gga'
-coordinates_gga = get_coordinates_from_gga(pos['gga'])
-
-# Création de la carte centrée sur la première position de la liste 'gga'
-if coordinates_gga:
-    first_position = coordinates_gga[0]
-    carte = folium.Map(location=(first_position['section_2'], first_position['section_4']), zoom_start=12)
-
-    # Création d'une liste pour les coordonnées
-    latitude_longitude = [(coord['section_2'], coord['section_4']) for coord in coordinates_gga]
-
-    # Tracé du trajet à partir des coordonnées
-    folium.PolyLine(locations=latitude_longitude, color='blue').add_to(carte)
-
-    # Enregistrer la carte dans un fichier HTML
-    carte.save('trajet_gps.html')
-else:
-    print("Aucune donnée de coordonnées 'gga' disponible.")
+# Génération de la carte avec le trajet à partir des données extraites des trames GPS
+generate_map_with_trajectory(trames_gps)

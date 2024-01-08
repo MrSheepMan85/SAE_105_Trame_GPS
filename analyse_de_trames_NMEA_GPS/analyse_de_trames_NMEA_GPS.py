@@ -152,47 +152,7 @@ def info_trame(trame_GPS):
         return None
 
 
-def info_trame_gga(section):
-    """
-    Analyse et extrait les informations d'une trame GPS conforme à la norme NMEA de type GGA.
-
-    Auteur : Etienne
-    Date de création : 26/12/23
-    Dernière modification : 26/12/23
-
-    Paramètres :
-    - section (list) : Une liste des éléments de la trame GPS à analyser pour extraire les informations.
-
-    Bornes d'utilisation :
-    - La section doit être conforme à la norme NMEA et correspondre au type GGA.
-
-    Retour :
-    - Un dictionnaire contenant les informations extraites de la trame GPS GGA, incluant le type, l'horaire, les coordonnées nord et est,
-    le nombre de satellites et l'altitude. Si la section ne correspond pas au type GGA, retourne None.
-
-    Exemple d'utilisation :
-    >>> info_trame_gga(['$GPGGA', '064036.289', '4836.5375', 'N', '00740.9373', 'E', '1', '04', '3.2', '200.2', 'M', '', '', '', '0000*0E'])
-    {'type': '$GPGGA', 'horaire': ('06', '40', '36', '289'), 'nord': ('4836', '5375'), 'est': ('00740', '9373'), 'nbsat': '1', 'alt': '200.2'}
-    """
-    infos = {}
-    infos["type"] = section[0]
-    infos["horaire"] = horaire(section[1])
-    infos["nord"] = parse_coo(section[2])
-    
-    # Vérification et traitement pour la section 3
-    if section[3] == "S":
-        infos["nord"] *= -1  # Multiplication par -1 si la section 3 est "S"
-    
-    infos["est"] = parse_coo(section[4])
-    
-    # Vérification et traitement pour la section 5
-    if section[5] == "W":
-        infos["est"] *= -1  # Multiplication par -1 si la section 5 est "W"
-    
-    infos["nbsat"] = section[7]
-    infos["alt"] = section[9]
-    return infos
-
+$
 
 def info_trame_vtg(trame_GPS):
     """
