@@ -2,7 +2,7 @@ import folium
 import analyse_de_trames_NMEA_GPS 
 import calcule
 
-def generate_map_with_trajectory(data):
+def génération_map(data):
   """
     Génère une carte représentant un trajet à partir des données de coordonnées extraites des trames GPS.
 
@@ -11,7 +11,7 @@ def generate_map_with_trajectory(data):
                     Chaque dictionnaire devrait contenir les clés 'nord' et 'est' pour chaque trame GGA.
 
     Usage :
-    generate_map_with_trajectory(data)
+    génération_map(data)
     
     La fonction crée une carte centrée sur la première coordonnée de la liste fournie, puis trace le trajet
     en utilisant des marqueurs circulaires à chaque point de coordonnées extraites des trames GGA.
@@ -31,4 +31,4 @@ m.save('carte_trajet.html')
 trames_gps = extract('SAE_105_Trame_GPS/data/trame.txt')
 
 # Génération de la carte avec le trajet à partir des données extraites des trames GPS
-generate_map_with_trajectory(trames_gps)
+génération_map(trames_gps)
