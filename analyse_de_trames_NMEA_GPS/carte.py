@@ -1,6 +1,6 @@
 import folium
 import analyse_de_trames_NMEA_GPS 
-import calcule
+
 
 def génération_map(data):
   """

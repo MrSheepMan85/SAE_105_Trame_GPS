@@ -4,7 +4,7 @@ Created on Thu Dec  7 10:27:15 2023
 
 @author: zorrilla
 """
-from analyse_de_trames_NMEA_GPS import info_trame
+import analyse_de_trames_NMEA_GPS
 
 #### VITESSES ####
 def vit_moyenne(trajet):
@@ -33,10 +33,14 @@ def vit_moyenne(trajet):
     ... ])
     # Résultat : 7.566666666666666
     """ 
+    trame = 'analyse_de_trames_NMEA_GPS/trame.txt'  
+    trajet = extract(trame)
     total = 0
     for i in trajet:
         total+= float(i['VTG']['vit'])
     return total/len(trajet)
+
+
 
 def vit_min(trajet):
     """
@@ -64,7 +68,8 @@ def vit_min(trajet):
     ... ])
     # Résultat : 5.5
     """
-
+    trame = 'analyse_de_trames_NMEA_GPS/trame.txt'  
+    trajet = extract(trame)
     min= 10000000000000000.0
     for i in trajet:
         vit = float(i['VTG']['vit'])
@@ -98,6 +103,8 @@ def vit_max(trajet):
     ... ])
     # Résultat : 10.0
     """
+    trame = 'analyse_de_trames_NMEA_GPS/trame.txt'  
+    trajet = extract(trame)
     min= -1.0
     for i in trajet:
         vit = float(i['VTG']['vit'])

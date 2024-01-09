@@ -6,7 +6,7 @@ Created on Fri Oct  6 09:32:31 2023
 @author: mchail09
 """
 import calcule
-import carte 
+
 
 #### TRAITEMENT DES TRAMES ####
 def sep_trame(trame_gps):
@@ -356,12 +356,7 @@ def positions_extremes(liste_infos):
                 min_ouest = est
                 coord_ouest = infos
     
-    return {
-        "max_nord": coord_nord,
-        "min_sud": coord_sud,
-        "max_est": coord_est,
-        "min_ouest": coord_ouest
-    }
+    return {"max_nord": {}, "min_sud": {}, "max_est": {}, "min_ouest": {}}
 
 def extract_high_alt(pos):
     """
@@ -404,18 +399,43 @@ def extract_high_alt(pos):
     
     return max_altitude
 
+def premier_dernier_gga(liste_trames):
+    """
+    Identifie le premier et le dernier élément du dictionnaire GGA dans la liste des trames GPS.
 
+    Auteur : Etienne
+    Date de création : 26/12/23
+    Dernière modification : 26/12/23
 
+    Paramètres :
+    - liste_trames (list) : Une liste de dictionnaires contenant les informations extraites des trames GPS.
 
+    Bornes d'utilisation :
+    - La liste d'informations doit contenir des dictionnaires avec les données des trames GPS conformes à la norme NMEA.
 
+    Retour :
+    - Un tuple contenant le premier et le dernier élément du dictionnaire GGA.
+      Si aucune trame GGA n'est trouvée, les valeurs retournées sont None.
 
+    Exemple d'utilisation :
+    >>> premier_dernier_gga([
+    ...     {'RMC': {'type': '$GPRMC', 'date': ('19', '11', '94'), 'nord': 50, 'est': -100}},
+    ...     {'GGA': {'type': '$GPGGA', 'horaire': ('06', '40', '36', '289'), 'nord': 60, 'est': -80}},
+    ...     {'VTG': {'type': '$GPVTG', 'vit': '005.5', 'nord': 70, 'est': -120}},
+    ... ])
+    # Résultat : ({'type': '$GPGGA', 'horaire': ('06', '40', '36', '289'), 'nord': 60, 'est': -80},
+    #             {'type': '$GPGGA', 'horaire': ('06', '40', '36', '289'), 'nord': 60, 'est': -80})
+    """
+    trame =extract(trame.txt)
+    gga_trames = [trame for trame in liste_trames if 'GGA' in trame]
+    if gga_trames:
+        premier = gga_trames[0]['GGA']
+        dernier = gga_trames[-1]['GGA']
+        return premier, dernier
+    else:
+        return None, None
+    
+resultat_premier_dernier_gga = premier_dernier_gga('analyse_de_trames_NMEA_GPS/trame.txt')
 
-
-
-
-
-
-
-
-
-
+# Récupération des résultats pour les inclure dans une chaîne HTML
+premier_gga, dernier_gga = resultat_premier_dernier_gga
