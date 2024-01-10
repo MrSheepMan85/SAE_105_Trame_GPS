@@ -1,9 +1,8 @@
 # main.py
 import sys
 import os
-from utilis import extract
 from calcule import vit_max, vit_moyenne, vit_min
-from analyse_de_trames_NMEA_GPS import positions_extremes, premier_dernier_gga, extract_high_alt
+from analyse_de_trames_NMEA_GPS import positions_extremes, premier_dernier_gga, extract_high_alt, extract
 from genere_html import genere_page_web
 
 
@@ -12,9 +11,7 @@ sys.path.append(current_script_path)
 
 def main():
     chemin_absolu = os.path.abspath('trame.txt')
-    print(chemin_absolu)
     infos = extract(chemin_absolu)
-    print(infos)
     maxi = vit_max(infos)
     moyenne = vit_moyenne(infos)
     mini = vit_min(infos)

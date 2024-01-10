@@ -1,8 +1,8 @@
 import folium
-import analyse_de_trames_NMEA_GPS 
+from analyse_de_trames_NMEA_GPS import extract, premier_dernier_gga, positions_extremes, extract_high_alt
+import sys
 
-
-def génération_map(data):
+def genenation_map():
   """
     Génère une carte représentant un trajet à partir des données de coordonnées extraites des trames GPS.
 
@@ -17,6 +17,9 @@ def génération_map(data):
     en utilisant des marqueurs circulaires à chaque point de coordonnées extraites des trames GGA.
     La carte est sauvegardée dans un fichier HTML nommé 'carte_trajet.html'.
     """
+    
+data = sys.append()
+
     # Création de la carte centrée sur une position de départ (par exemple, première coordonnée)
 m = folium.Map(location=[data[0]['nord'], data[0]['est']], zoom_start=12)
 
@@ -31,4 +34,4 @@ m.save('carte_trajet.html')
 trames_gps = extract('SAE_105_Trame_GPS/data/trame.txt')
 
 # Génération de la carte avec le trajet à partir des données extraites des trames GPS
-génération_map(trames_gps)
+genenation_map(trames_gps)

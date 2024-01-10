@@ -6,7 +6,7 @@ Created on Thu Dec 7 10:27:15 2023
 @author: zorrilla
 """
 
-from utilis import extract
+from analyse_de_trames_NMEA_GPS import extract
 
 #### VITESSES ####
 def vit_moyenne(liste_infos):

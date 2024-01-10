@@ -4,16 +4,8 @@ import os
 from calcule import vit_max, vit_min, vit_moyenne
 from analyse_de_trames_NMEA_GPS import extract, premier_dernier_gga, positions_extremes, extract_high_alt
 
-def genere_page_web(nom_fichier, titre_page, infos_trame, premier_GGA, dernier_GGA, max_nord, min_sud, max_est, min_ouest, alt, maxi, moyenne):
-    try:
-        with open(nom_fichier, mode='w', encoding='utf-8') as fichier:
-            fichier.write(generer_html(titre_page, infos_trame, premier_GGA, dernier_GGA, max_nord, min_sud, max_est, min_ouest, alt, maxi, moyenne))
-        print("Le fichier HTML a été généré avec succès.")
-    except Exception as e:
-        print(f"Une erreur s'est produite lors de la génération du fichier HTML : {str(e)}")
-
 def generer_html(titre_page, infos_trame, premier_GGA, dernier_GGA, max_nord, min_sud, max_est, min_ouest, alt, maxi, moyenne):
-    return f"""
+    
 
     with open('../html/page_html.html', mode='w', encoding='utf-8') as fichier:
         corps = f"""
@@ -104,20 +96,20 @@ def generer_html(titre_page, infos_trame, premier_GGA, dernier_GGA, max_nord, mi
         fichier.write(corps)
 
 def main():
-    chemin_absolu = os.path.abspath('analyse_de_trames_NMEA_GPS/trame.txt')
-    print(chemin_absolu)
-    infos = extract(chemin_absolu)
-    max_vitesse = vit_max(infos)
-    moyenne = vit_moyenne(infos)
-    min_vitesse = vit_min(infos)
-    resultat_positions_extremes = positions_extremes(infos)
-    premier = premier_dernier_gga(infos)
-    max_nord = resultat_positions_extremes["max_nord"]
-    min_sud = resultat_positions_extremes["min_sud"]
-    max_est = resultat_positions_extremes["max_est"]
-    min_ouest = resultat_positions_extremes["min_ouest"]
-    alt = extract_high_alt(infos)
-    genere_page_web("..//html/", "Résultats de l'analyse de trame GPS", infos, premier, resultat_positions_extremes["dernier_GGA"],
+   chemin_absolu = "$GNGGA,180844.000,4635.0198,N,00020.0347,E,1,24,0.62,69.9,M,48.4,M,,*49;$GNRMC,180844.000,A,4635.0198,N,00020.0347,E,0.000,207.28,070124,,,A,V*32;$GNVTG,207.28,T,,M,0.000,N,0.000,K,A*2C;$GNGGA,180845.000,4635.0203,N,00020.0343,E,1,25,0.61,69.7,M,48.4,M,,*41;$GNRMC,180845.000,A,4635.0203,N,00020.0343,E,0.000,207.28,070124,,,A,V*36;$GNVTG,207.28,T,,M,0.000,N,0.000,K,A*2C;$GNGGA,180846.000,4635.0206,N,00020.0342,E,1,25,0.61,69.5,M,48.4,M,,*44;$GNRMC,180846.000,A,4635.0206,N,00020.0342,E,0.000,207.28,070124,,,A,V*31;$GNVTG,207.28,T,,M,0.000,N,0.000,K,A*2C"
+   liste_chemin_absolu = chemin_absolu.split(';')
+   infos = extract(liste_chemin_absolu)
+   max_vitesse = vit_max(infos)
+   moyenne = vit_moyenne(infos)
+   min_vitesse = vit_min(infos)
+   resultat_positions_extremes = positions_extremes(infos)
+   premier = premier_dernier_gga(infos)
+   max_nord = resultat_positions_extremes["max_nord"]
+   min_sud = resultat_positions_extremes["min_sud"]
+   max_est = resultat_positions_extremes["max_est"]
+   min_ouest = resultat_positions_extremes["min_ouest"]
+   alt = extract_high_alt(infos)
+   generer_html("../html/", "Résultats de l'analyse de trame GPS", infos, premier, resultat_positions_extremes["dernier_GGA"],
                     max_nord, min_sud, max_est, min_ouest, alt, max_vitesse, moyenne, min_vitesse)
 
 if __name__ == "__main__":
