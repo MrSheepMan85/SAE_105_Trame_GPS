@@ -6,7 +6,7 @@ Created on Fri Oct  6 09:32:31 2023
 @author: mchail09
 """
 
-import utilis
+
 
 #### TRAITEMENT DES TRAMES ####
 def sep_trame(trame_gps):
