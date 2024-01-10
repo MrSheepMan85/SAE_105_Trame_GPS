@@ -1,0 +1,55 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    padding: 20px;
+}
+
+h1, h2 {
+    margin: 0;
+}
+
+section {
+    margin: 20px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    border: 2px solid #888;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 5px; /* Réduction de l'espace dans les cellules */
+    text-align: left;
+}
+
+th {
+    background-color: #555;
+    color: #fff;
+}
+
+footer {
+    background-color: #444;
+    color: #fff;
+    text-align: center;
+    padding: 10px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+/* Responsive Design */
+@media screen and (max-width: 600px) {
+    table {
+        font-size: 14px;
+    }
+}
